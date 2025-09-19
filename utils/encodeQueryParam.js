@@ -1,6 +1,6 @@
-import { Platform } from 'react-native';
-import { osVersion } from 'expo-device';
-import * as qs from 'qs';
+import { Platform } from "react-native";
+import { osVersion } from "expo-device";
+import * as qs from "qs";
 
 /*
  * IOS 17 introduces new automatic encoding rules that leads to double encoding
@@ -11,16 +11,16 @@ import * as qs from 'qs';
  * https://github.com/facebook/react-native/issues/39793
  */
 let isIos17OrNewer = false;
-if (Platform.OS === 'ios') {
-  const splitVersion = osVersion.split('.');
+if (Platform.OS === "ios") {
+  const splitVersion = osVersion.split(".");
   if (splitVersion.length > 0) {
     const majorVersion = Number(splitVersion[0]);
-    isIos17OrNewer = typeof majorVersion === 'number' && majorVersion >= 17;
+    isIos17OrNewer = typeof majorVersion === "number" && majorVersion >= 17;
   }
 }
 
-const isUrlEncoded = s => {
-  if (typeof s !== 'string' || !s.match(/%[0-9A-F][0-9A-F]/)) {
+const isUrlEncoded = (s) => {
+  if (typeof s !== "string" || !s.match(/%[0-9A-F][0-9A-F]/)) {
     return false;
   }
   try {
@@ -31,7 +31,7 @@ const isUrlEncoded = s => {
   }
 };
 
-export const encodeQueryParam = param => {
+export const encodeQueryParam = (param) => {
   if (isIos17OrNewer || isUrlEncoded(param)) {
     return param;
   } else {
@@ -39,8 +39,7 @@ export const encodeQueryParam = param => {
   }
 };
 
-export const renderParam = value =>
-  typeof value === 'string' ? value : JSON.stringify(value);
+export const renderParam = (value) => (typeof value === "string" ? value : JSON.stringify(value));
 
 export const renderQueryString = (paramsDict, arrayFormat) => {
   if (arrayFormat) {
@@ -48,11 +47,9 @@ export const renderQueryString = (paramsDict, arrayFormat) => {
       arrayFormat,
       encode: !isIos17OrNewer,
     });
-    return s && '?' + s;
+    return s && "?" + s;
   }
-  const filtered = Object.entries(paramsDict).filter(kv => kv[1] !== undefined);
-  const queries = filtered.map(
-    ([k, v]) => `${encodeQueryParam(k)}=${encodeQueryParam(v)}`
-  );
-  return !queries.length ? '' : '?' + queries.join('&');
+  const filtered = Object.entries(paramsDict).filter((kv) => kv[1] !== undefined);
+  const queries = filtered.map(([k, v]) => `${encodeQueryParam(k)}=${encodeQueryParam(v)}`);
+  return !queries.length ? "" : "?" + queries.join("&");
 };

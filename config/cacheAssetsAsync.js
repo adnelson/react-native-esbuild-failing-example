@@ -1,12 +1,12 @@
-import { Image } from 'react-native';
-import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
+import { Image } from "react-native";
+import { Asset } from "expo-asset";
+import * as Font from "expo-font";
 
-import IMAGES from './Images.js';
+import IMAGES from "./Images.js";
 
 function cacheImages(images) {
-  return images.map(image => {
-    if (typeof image === 'string') {
+  return images.map((image) => {
+    if (typeof image === "string") {
       return Image.prefetch(image);
     } else {
       return Asset.fromModule(image).downloadAsync();
@@ -15,7 +15,7 @@ function cacheImages(images) {
 }
 
 function cacheFonts(fonts) {
-  return fonts.map(font => Font.loadAsync(font));
+  return fonts.map((font) => Font.loadAsync(font));
 }
 
 export default function cacheAssetsAsync() {

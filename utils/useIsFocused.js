@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigation, useNavigationContainerRef } from 'expo-router';
+import React from "react";
+import { useNavigation, useNavigationContainerRef } from "expo-router";
 
 const useIsFocused = () => {
   const navigation = useNavigation();
@@ -15,12 +15,12 @@ const useIsFocused = () => {
       setIsFocused(false);
     };
 
-    navigation.addListener('focus', focusListener);
-    navigation.addListener('blur', blurListener);
+    navigation.addListener("focus", focusListener);
+    navigation.addListener("blur", blurListener);
 
     return () => {
-      navigation.removeListener('focus', focusListener);
-      navigation.removeListener('blur', blurListener);
+      navigation.removeListener("focus", focusListener);
+      navigation.removeListener("blur", blurListener);
     };
   }, []);
 

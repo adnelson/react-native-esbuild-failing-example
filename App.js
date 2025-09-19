@@ -1,3 +1,56 @@
+/*DRAFTBIT*/ if (require('react-native').Platform.OS === 'web') {
+/*DRAFTBIT*/   const { Child } = require('@draftbit/iframe-element-picker');
+/*DRAFTBIT*/   Child.init("http://localhost:3002", process.env.EXPO_PUBLIC_PROJECT_PATH, false);
+/*DRAFTBIT*/ }
+/*DRAFTBIT*/ 
+/*DRAFTBIT*/ // On web, logs are only sent to the browser console, this sends the logs to the terminal as well.
+/*DRAFTBIT*/ // Uses the Metro HMRClient to send the logs to the terminal
+/*DRAFTBIT*/ // Based on https://github.com/expo/expo/blob/main/packages/expo/src/async-require/hmr.ts
+/*DRAFTBIT*/ if (require('react-native').Platform.OS === 'web') {
+/*DRAFTBIT*/   const MetroHMRClient = require("metro-runtime/src/modules/HMRClient");
+/*DRAFTBIT*/   const serverScheme = window.location.protocol === "https:" ? "wss" : "ws";
+/*DRAFTBIT*/   const hmrClient = new MetroHMRClient(`${serverScheme}://${window.location.host}/hot`);
+/*DRAFTBIT*/ 
+/*DRAFTBIT*/   const logLevels = [
+/*DRAFTBIT*/     "trace",
+/*DRAFTBIT*/     "info",
+/*DRAFTBIT*/     "warn",
+/*DRAFTBIT*/     "error",
+/*DRAFTBIT*/     "log",
+/*DRAFTBIT*/     "group",
+/*DRAFTBIT*/     "groupCollapsed",
+/*DRAFTBIT*/     "groupEnd",
+/*DRAFTBIT*/     "debug",
+/*DRAFTBIT*/   ];
+/*DRAFTBIT*/ 
+/*DRAFTBIT*/   for (const level of logLevels) {
+/*DRAFTBIT*/     const original = console[level];
+/*DRAFTBIT*/     const updated = (...args) => {
+/*DRAFTBIT*/       original.apply(console, args);
+/*DRAFTBIT*/       hmrClient.send(
+/*DRAFTBIT*/         JSON.stringify({
+/*DRAFTBIT*/           type: "log",
+/*DRAFTBIT*/           level: level,
+/*DRAFTBIT*/           platform: "web",
+/*DRAFTBIT*/           mode: "BRIDGE",
+/*DRAFTBIT*/           data: args,
+/*DRAFTBIT*/         }),
+/*DRAFTBIT*/       );
+/*DRAFTBIT*/     };
+/*DRAFTBIT*/     console[level] = updated;
+/*DRAFTBIT*/   }
+/*DRAFTBIT*/ 
+/*DRAFTBIT*/   // Also log uncaught errors to have them show up in the terminal as well
+/*DRAFTBIT*/   window.onerror = function myErrorHandler(errorMsg) {
+/*DRAFTBIT*/     console.error(errorMsg);
+/*DRAFTBIT*/     return true;
+/*DRAFTBIT*/   };
+/*DRAFTBIT*/ 
+/*DRAFTBIT*/   window.onunhandledrejection = function myErrorHandler(errorEvent) {
+/*DRAFTBIT*/     console.error(errorEvent.reason?.stack || errorEvent.reason || errorEvent);
+/*DRAFTBIT*/     return true;
+/*DRAFTBIT*/   };
+/*DRAFTBIT*/ }
 import * as React from 'react';
 import { Provider as ThemeProvider } from '@draftbit/ui';
 import * as Notifications from 'expo-notifications';

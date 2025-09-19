@@ -1,13 +1,13 @@
-import React from 'react';
-import { View, ActivityIndicator } from 'react-native';
-import * as SplashScreen from 'expo-splash-screen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from "react";
+import { View, ActivityIndicator } from "react-native";
+import * as SplashScreen from "expo-splash-screen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const DeviceVariables = { __env__: 'Production' };
+export const DeviceVariables = { __env__: "Production" };
 export const AppVariables = {};
 const GlobalVariableContext = React.createContext();
 const GlobalVariableUpdater = React.createContext();
-const keySuffix = '';
+const keySuffix = "";
 
 // Attempt to parse a string as JSON. If the parse fails, return the string as-is.
 // This is necessary to account for variables which are already present in local
@@ -41,16 +41,14 @@ class GlobalVariable {
 
   static async loadLocalStorage() {
     const keys = Object.keys(DeviceVariables);
-    const entries = await AsyncStorage.multiGet(
-      keySuffix ? keys.map(k => k + keySuffix) : keys
-    );
+    const entries = await AsyncStorage.multiGet(keySuffix ? keys.map((k) => k + keySuffix) : keys);
 
     // If values isn't set, use the default. These will be written back to
     // storage on the next render.
     const withDefaults = entries.map(([key_, value]) => {
       // Keys only have the suffix appended in storage; strip the key
       // after they are retrieved
-      const key = keySuffix ? key_.replace(keySuffix, '') : key_;
+      const key = keySuffix ? key_.replace(keySuffix, "") : key_;
       return [key, value ? tryParseJson(value) : DeviceVariables[key]];
     });
 
@@ -66,11 +64,11 @@ class State {
 
   static reducer(state, { type, payload }) {
     switch (type) {
-      case 'RESET':
+      case "RESET":
         return { values: State.defaultValues, __loaded: true };
-      case 'LOAD_FROM_ASYNC_STORAGE':
+      case "LOAD_FROM_ASYNC_STORAGE":
         return { values: { ...state.values, ...payload }, __loaded: true };
-      case 'UPDATE':
+      case "UPDATE":
         return state.__loaded
           ? {
               ...state,
@@ -114,14 +112,14 @@ export function GlobalVariableProvider({ children }) {
           payload.__env__ !== DeviceVariables.__env__
         ) {
           console.log(
-            `Publication Environment changed from ${payload.__env__} to ${DeviceVariables.__env__}. Refreshing variables`
+            `Publication Environment changed from ${payload.__env__} to ${DeviceVariables.__env__}. Refreshing variables`,
           );
           dispatch({
-            type: 'LOAD_FROM_ASYNC_STORAGE',
+            type: "LOAD_FROM_ASYNC_STORAGE",
             payload: DeviceVariables,
           });
         } else {
-          dispatch({ type: 'LOAD_FROM_ASYNC_STORAGE', payload });
+          dispatch({ type: "LOAD_FROM_ASYNC_STORAGE", payload });
         }
       } catch (err) {
         console.error(err);
@@ -159,10 +157,7 @@ export function GlobalVariableProvider({ children }) {
   }
 
   return (
-    <GlobalVariableUpdater.Provider
-      value={dispatch}
-      onLayout={onLayoutRootView}
-    >
+    <GlobalVariableUpdater.Provider value={dispatch} onLayout={onLayoutRootView}>
       <GlobalVariableContext.Provider value={state.values}>
         {children}
       </GlobalVariableContext.Provider>
@@ -174,7 +169,7 @@ export function GlobalVariableProvider({ children }) {
 export function useSetValue() {
   const dispatch = React.useContext(GlobalVariableUpdater);
   return ({ key, value }) => {
-    dispatch({ type: 'UPDATE', payload: { key, value } });
+    dispatch({ type: "UPDATE", payload: { key, value } });
     return value;
   };
 }

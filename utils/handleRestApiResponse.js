@@ -1,4 +1,4 @@
-export const isOkStatus = status => status >= 200 && status < 300;
+export const isOkStatus = (status) => status >= 200 && status < 300;
 
 export const handleResponse = async (res, handlers = {}) => {
   const { status, statusText } = res;
@@ -9,10 +9,10 @@ export const handleResponse = async (res, handlers = {}) => {
   } catch (e) {
     console.error(
       [
-        'Failed to parse response text as JSON.',
+        "Failed to parse response text as JSON.",
         `Error: ${e.message}`,
         `Text: ${JSON.stringify(text)}`,
-      ].join(' ')
+      ].join(" "),
     );
   }
 

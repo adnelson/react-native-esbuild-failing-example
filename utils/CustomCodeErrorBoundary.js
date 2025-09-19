@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import React from "react";
+import { Text, View } from "react-native";
 
 export default class CustomCodeErrorBoundary extends React.Component {
   constructor(props) {
@@ -14,13 +14,13 @@ export default class CustomCodeErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <View style={{ padding: 8, backgroundColor: 'red' }}>
-          <Text style={{ color: 'white' }}>
-            There was a problem with your custom code. Check your custom code
-            and make sure there are no errors.
+        <View style={{ padding: 8, backgroundColor: "red" }}>
+          <Text style={{ color: "white" }}>
+            There was a problem with your custom code. Check your custom code and make sure there
+            are no errors.
           </Text>
           {this.state.error ? (
-            <Text style={{ color: 'white' }}>
+            <Text style={{ color: "white" }}>
               {`
 Error:
 ${this.state.error.toString()}`}

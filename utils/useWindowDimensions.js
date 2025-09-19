@@ -1,8 +1,5 @@
-import React from 'react';
-import {
-  useWindowDimensions as useDefaultWindowDimensions,
-  Platform,
-} from 'react-native';
+import React from "react";
+import { useWindowDimensions as useDefaultWindowDimensions, Platform } from "react-native";
 
 /**
  * On web, the default implementation of `useWindowDimensions` returns dimensions excluding the scroll bar size
@@ -11,7 +8,7 @@ import {
 const useWindowDimensions = () => {
   const dimensions = useDefaultWindowDimensions();
 
-  if (Platform.OS === 'web') {
+  if (Platform.OS === "web") {
     return {
       ...dimensions,
       width: window.innerWidth,

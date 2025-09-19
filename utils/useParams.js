@@ -1,6 +1,6 @@
-import React from 'react';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-import { GLOBAL_NON_SERIALIZABLE_PARAMS_VALUES } from './useNavigation';
+import React from "react";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { GLOBAL_NON_SERIALIZABLE_PARAMS_VALUES } from "./useNavigation";
 
 const useParams = () => {
   const serializableParams = useLocalSearchParams();

@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRouter, useNavigation as useDefaultNavigation } from 'expo-router';
+import React from "react";
+import { useRouter, useNavigation as useDefaultNavigation } from "expo-router";
 
 export let GLOBAL_NON_SERIALIZABLE_PARAMS_VALUES = {};
 
@@ -8,7 +8,7 @@ const splitRouteAndParams = (currentRoute, params = {}) => {
     return { route: currentRoute, params };
   }
 
-  const newRoute = currentRoute + '/' + params.screen;
+  const newRoute = currentRoute + "/" + params.screen;
   if (params.params) {
     return splitRouteAndParams(newRoute, params.params);
   }
@@ -16,12 +16,12 @@ const splitRouteAndParams = (currentRoute, params = {}) => {
   return { route: newRoute, params: {} };
 };
 
-const splitSerializableAndNonSerializableParams = params => {
+const splitSerializableAndNonSerializableParams = (params) => {
   const serializable = {};
   const nonSerializable = {};
-  const serializableTypes = ['string', 'number', 'boolean'];
+  const serializableTypes = ["string", "number", "boolean"];
 
-  Object.keys(params).forEach(key => {
+  Object.keys(params).forEach((key) => {
     if (serializableTypes.includes(typeof params[key])) {
       serializable[key] = params[key];
     } else {
@@ -34,14 +34,10 @@ const splitSerializableAndNonSerializableParams = params => {
 
 const prepareForNavigation = (route, params = {}) => {
   GLOBAL_NON_SERIALIZABLE_PARAMS_VALUES = {};
-  const { route: newRoute, params: newParams } = splitRouteAndParams(
-    route,
-    params
-  );
-  const { serializable, nonSerializable } =
-    splitSerializableAndNonSerializableParams(newParams);
+  const { route: newRoute, params: newParams } = splitRouteAndParams(route, params);
+  const { serializable, nonSerializable } = splitSerializableAndNonSerializableParams(newParams);
 
-  Object.keys(nonSerializable).forEach(key => {
+  Object.keys(nonSerializable).forEach((key) => {
     GLOBAL_NON_SERIALIZABLE_PARAMS_VALUES[key] = nonSerializable[key];
   });
 
@@ -53,26 +49,17 @@ const useNavigation = () => {
   const defaultNavigation = useDefaultNavigation();
 
   const navigate = (route, params) => {
-    const { route: newRoute, params: newParams } = prepareForNavigation(
-      route,
-      params
-    );
+    const { route: newRoute, params: newParams } = prepareForNavigation(route, params);
     router.navigate({ pathname: newRoute, params: newParams });
   };
 
   const replace = (route, params) => {
-    const { route: newRoute, params: newParams } = prepareForNavigation(
-      route,
-      params
-    );
+    const { route: newRoute, params: newParams } = prepareForNavigation(route, params);
     router.replace({ pathname: newRoute, params: newParams });
   };
 
   const push = (route, params) => {
-    const { route: newRoute, params: newParams } = prepareForNavigation(
-      route,
-      params
-    );
+    const { route: newRoute, params: newParams } = prepareForNavigation(route, params);
     router.push({ pathname: newRoute, params: newParams });
   };
 

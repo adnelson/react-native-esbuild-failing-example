@@ -1,12 +1,12 @@
-import { systemWeights } from 'react-native-typography';
-import palettes from './palettes';
-import { createTheme, DefaultTheme } from '@draftbit/ui';
+import { systemWeights } from "react-native-typography";
+import palettes from "./palettes";
+import { createTheme, DefaultTheme } from "@draftbit/ui";
 export default createTheme({
   breakpoints: {},
   palettes,
   baseTheme: DefaultTheme,
   theme: {
-    name: 'Draftbit Default',
+    name: "Draftbit Default",
     colors: {
       background: {
         base: {
@@ -130,67 +130,67 @@ export default createTheme({
     typography: {
       body1: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.regular ?? {}),
-        fontWeight: '400',
+        fontWeight: "400",
         fontSize: 16,
       },
       body2: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.regular ?? {}),
-        fontWeight: '400',
+        fontWeight: "400",
         fontSize: 14,
       },
       button: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.bold ?? {}),
-        fontWeight: '700',
+        fontWeight: "700",
         fontSize: 14,
       },
       caption: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.regular ?? {}),
-        fontWeight: '400',
+        fontWeight: "400",
         fontSize: 12,
       },
       headline1: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.bold ?? {}),
-        fontWeight: '700',
+        fontWeight: "700",
         fontSize: 60,
       },
       headline2: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.bold ?? {}),
-        fontWeight: '700',
+        fontWeight: "700",
         fontSize: 48,
       },
       headline3: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.bold ?? {}),
-        fontWeight: '700',
+        fontWeight: "700",
         fontSize: 34,
       },
       headline4: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.bold ?? {}),
-        fontWeight: '700',
+        fontWeight: "700",
         fontSize: 24,
       },
       headline5: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.bold ?? {}),
-        fontWeight: '700',
+        fontWeight: "700",
         fontSize: 20,
       },
       headline6: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.bold ?? {}),
-        fontWeight: '700',
+        fontWeight: "700",
         fontSize: 16,
       },
       overline: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.regular ?? {}),
-        fontWeight: '400',
+        fontWeight: "400",
         fontSize: 12,
       },
       subtitle1: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.regular ?? {}),
-        fontWeight: '400',
+        fontWeight: "400",
         fontSize: 16,
       },
       subtitle2: {
         ...(({ backgroundColor, ...o }) => o)(systemWeights.regular ?? {}),
-        fontWeight: '400',
+        fontWeight: "400",
         fontSize: 14,
       },
     },

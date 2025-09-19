@@ -1,4 +1,4 @@
-export const create = styles => styles;
+export const create = (styles) => styles;
 
 export const compose2 = (style1, style2) => {
   const res = { ...style1 };
@@ -38,14 +38,10 @@ export const getWidthValue = (v, width, isValid) => {
   // which fits in the current screen width
   if (Array.isArray(v)) {
     let maxMinWidth = 0;
-    v.forEach(innerV => {
+    v.forEach((innerV) => {
       const minWidth = innerV?.minWidth ?? 0;
       const value = innerV?.value ?? innerV;
-      if (
-        (!isValid || isValid(value)) &&
-        minWidth <= width &&
-        minWidth >= maxMinWidth
-      ) {
+      if ((!isValid || isValid(value)) && minWidth <= width && minWidth >= maxMinWidth) {
         resV = value;
         maxMinWidth = minWidth;
       }
@@ -78,9 +74,7 @@ export const applyWidth = (style, width, styleKeys) => {
     res[k] = getWidthValue(
       v,
       width,
-      value =>
-        value == null ||
-        (value !== '' && ['string', 'number'].includes(typeof value))
+      (value) => value == null || (value !== "" && ["string", "number"].includes(typeof value)),
     );
   }
   return res;
